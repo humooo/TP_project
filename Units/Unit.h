@@ -1,3 +1,5 @@
+#pragma once
+
 class Unit {
 public:
 	int getAttack() const;
@@ -8,7 +10,7 @@ public:
 	void setHealth(const int& );
 	void setMaxHealth(const int& );
 	void setCost(const int&);
-private:
+protected:
 	bool attack;
 	int max_health;
 	int health;

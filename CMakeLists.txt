@@ -1,12 +1,14 @@
 cmake_minimum_required(VERSION 3.20)
-project(TP_project)
+project(TP_Project)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(Units)
+include_directories(dev)
 
-add_executable(TP_project
-        Units/Archer.cpp
-        Units/Swordsman.cpp
-        Units/Unit.cpp
-        Units/Warrior.cpp)
+add_executable(main
+        dev/Factories.cpp
+        dev/Factories.h
+        dev/Player.cpp
+        dev/Player.h
+        dev/Units.h
+        main.cpp)

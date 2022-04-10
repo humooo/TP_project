@@ -1,7 +1,7 @@
-#include <iostream>
+#include "dev/run.h"
 
 int main()
 {
-    std::cout << "ok!" << std::endl;
+    run();
     return 0;
 }

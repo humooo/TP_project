@@ -1,0 +1,3 @@
+C:/Users/daler/git/TP_project/cmake-build-debug/CMakeFiles/main.dir
+C:/Users/daler/git/TP_project/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/daler/git/TP_project/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,12 +1,5 @@
-#include <iostream>
-#include <vector>
-#include "Player.h"
 #include "run.h"
-#include "Units.h"
-#include "Factories.h"
-#include <ctime>
 
-using namespace std;
 
 vector<int> unit_ids;
 vector<command> cmd;
@@ -204,7 +197,8 @@ void run() {
     cmd.push_back(command(1, "(1) Создать юнита\n"));
     cmd.push_back(command(2, "(2) Показать ваших юнитов\n"));
     cmd.push_back(command(3, "(3) Показать юнитов соперника\n"));
-    cmd.push_back(command(4, "(4) Закончить ход\n"));
+    cmd.push_back(command(4, "(5) Атаковать юнита врага\n"));
+    cmd.push_back(command(5, "(5) Закончить ход\n"));
 
     while (true) {
         if (turn) {

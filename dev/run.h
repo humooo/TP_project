@@ -1,10 +1,14 @@
 #pragma once
 
-#include "Player.h"
-#include "Factories.h"
-#include "Units.h"
-#include <string>
+#include <iostream>
 #include <vector>
+#include <ctime>
+#include <string>
+#include "Player.h"
+#include "Units.h"
+#include "Factories.h"
+
+using namespace std;
 
 class command {
 public:
@@ -27,4 +31,4 @@ void create_unit_from_user(Player* , AbstractFactory& );
 std::string idtoname(int );
 void do_attack(Player* , Player* );
 void set_attack(Player* );
-void game_over(Player* ):
+void game_over(Player* );

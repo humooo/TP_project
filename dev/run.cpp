@@ -4,7 +4,7 @@
 vector<int> unit_ids;
 vector<command> cmd;
 
-std::string idtoname(int unitid) {
+std::string Game::idtoname(int unitid) {
     switch (unitid) {
     case 1:
         return "Лучник";
@@ -18,11 +18,11 @@ std::string idtoname(int unitid) {
     return 0;
 }
 
-void print_units(Player* player) {
+void Print::units(Player* player) {
     for (int i = 0; i < player->units.size(); i++) {
         cout << "\t"
         << "(" << i + 1 << ") "
-        << idtoname(player->units[i].id) << " "
+        << Game().idtoname(player->units[i].id) << " "
         << player->units[i].dmg << " "
         << player->units[i].hp << " ";
         if (not player->units[i].canAttack)
@@ -31,7 +31,7 @@ void print_units(Player* player) {
     }
 }
 
-void print_info(Player* player) {
+void Print::info(Player* player) {
     cout << "\n"
     << player->name
     << "Золото: " << (player->gold) << "\n";
@@ -39,12 +39,12 @@ void print_info(Player* player) {
         cout << cmd[i].name;
 }
 
-void print_all_units() {
+void Print::all_units() {
     for (int i = 0; i < unit_ids.size(); i++)
         if (i != 3)
             cout << "\t"
             << " (" << idtounit(i + 1).id << ") "
-            << idtoname(i + 1) << " "
+            << Game().idtoname(i + 1) << " "
             << idtounit(i + 1).dmg << " "
             << idtounit(i + 1).hp
             << " Стоимость: "
@@ -52,13 +52,14 @@ void print_all_units() {
             << "\n";
 }
 
-void create_unit_from_user(Player* player, AbstractFactory& factory) {
+
+void Game::create_unit_from_user(Player* player, AbstractFactory& factory) {
     int tt;
     do {
         cout << "\tЗолото: "
         << player->gold
         << "\n";
-        print_all_units();
+        Print().all_units();
         cout << "\t"
         << " (" << unit_ids.size() << ") "
         << "Выход\n";
@@ -72,7 +73,7 @@ void create_unit_from_user(Player* player, AbstractFactory& factory) {
                 player->createUnit(tt, factory);
                 player->gold -= idtounit(tt).price;
                 cout << "\n";
-                print_units(player);
+                Print().units(player);
                 cout << "\n";
             }
         else
@@ -80,55 +81,55 @@ void create_unit_from_user(Player* player, AbstractFactory& factory) {
     } while (tt != unit_ids.size());
 }
 
-void do_turn(Player* player, AbstractFactory& factory, Player* opp) {
-    print_info(player);
+void Game::do_turn(Player* player, AbstractFactory& factory, Player* opp) {
+    Print().info(player);
     int t = 0;
     while(t != 5) {
         cin >> t;
         switch (t) {
         case 1:
-            create_unit_from_user(player, factory);
-            print_info(player);
+            Game().create_unit_from_user(player, factory);
+            Print().info(player);
             break;
         case 2:
-            print_units(player);
-            print_info(player);
+            Print().units(player);
+            Print().info(player);
             break;
         case 3:
-            print_units(opp);
-            print_info(player);
+            Print().units(opp);
+            Print().info(player);
             break;
         case 4:
             if(player->units.size() > 1)
-                do_attack(player, opp);
+                Game().do_attack(player, opp);
             else
                 cout << "Некому атаковать\n";
-            print_info(player);
+            Print().info(player);
             break;
         }
     }
-    set_attack(player);
+    Game().set_attack(player);
 }
 
-void set_attack(Player* player) {
+void Game::set_attack(Player* player) {
 	for (int i = 0; i < player->units.size(); i++)
 		player->units[i].canAttack = 1;
 }
 
-void game_over(Player* player) {
+void Print::game_over(Player* player) {
 	cout << "\nИгра окончена.\n"
 		<< "Победил игрок " << player->name;
 	exit(0);
 }
 
-void do_attack(Player* player, Player* opp) {
+void Game::do_attack(Player* player, Player* opp) {
 	do {
 		int t1;
 		cout << player->name;
-		print_units(player);
+		Print().units(player);
 
 		cout << opp->name;
-		print_units(opp);
+        Print().units(opp);
 		cout << "\t("
 			<< player->units.size() + 1 << ") Выход\n";
 		bool b;
@@ -162,13 +163,13 @@ void do_attack(Player* player, Player* opp) {
 		player->units[t1 - 1].hp -= opp->units[t2 - 1].dmg * player->units[t1 - 1].takendmg * opp->units[t2 - 1].attackdmg;
 		player->units[t1 - 1].canAttack = 0;
 		if (opp->units[t2 - 1].hp <= 0) {
-			if (t2 == 1) game_over(player);
+			if (t2 == 1) Print().game_over(player);
 			else {
 				player->gold += opp->units[t2 - 1].price * 2;
 				opp->units.erase(opp->units.begin() + t2 - 1);
 			}
 		}
-		print_units(opp);
+        Print().units(opp);
 	} while (1);
 }
 
@@ -197,15 +198,15 @@ void run() {
     cmd.push_back(command(1, "(1) Создать юнита\n"));
     cmd.push_back(command(2, "(2) Показать ваших юнитов\n"));
     cmd.push_back(command(3, "(3) Показать юнитов соперника\n"));
-    cmd.push_back(command(4, "(5) Атаковать юнита врага\n"));
+    cmd.push_back(command(4, "(4) Атаковать юнита врага\n"));
     cmd.push_back(command(5, "(5) Закончить ход\n"));
 
     while (true) {
         if (turn) {
-            do_turn(&player1, engfactory, &player2);
+            Game().do_turn(&player1, engfactory, &player2);
         }
         else {
-            do_turn(&player2, francefactory, &player1);
+            Game().do_turn(&player2, francefactory, &player1);
         }
         turn = not turn;
         cout << '\n';

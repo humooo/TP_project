@@ -21,14 +21,22 @@ public:
 
 };
 
+class Print {
+public:
+    void units(Player* );
+    void info(Player* );
+    void all_units();
+    void game_over(Player* );
+};
+
+class Game {
+public:
+    void do_turn(Player* , AbstractFactory& , Player* );
+    void create_unit_from_user(Player* , AbstractFactory& );
+    std::string idtoname(int );
+    void do_attack(Player* , Player* );
+    void set_attack(Player* );
+};
+
 void run();
-void do_turn(Player* , AbstractFactory& , Player* );
-Unit idtounit(int );
-void print_units(Player* );
-void print_info(Player* );
-void print_all_units();
-void create_unit_from_user(Player* , AbstractFactory& );
-std::string idtoname(int );
-void do_attack(Player* , Player* );
-void set_attack(Player* );
-void game_over(Player* );
+

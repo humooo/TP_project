@@ -40,21 +40,23 @@ void Print::info(Player* player) {
 }
 
 void Print::all_units() {
+    Unit unit;
     for (int i = 0; i < unit_ids.size(); i++)
         if (i != 3)
             cout << "\t"
-            << " (" << idtounit(i + 1).id << ") "
+            << " (" << idtounit(i + 1, unit).id << ") "
             << Game().idtoname(i + 1) << " "
-            << idtounit(i + 1).dmg << " "
-            << idtounit(i + 1).hp
+            << idtounit(i + 1, unit).dmg << " "
+            << idtounit(i + 1, unit).hp
             << " Стоимость: "
-            << idtounit(i + 1).price
+            << idtounit(i + 1, unit).price
             << "\n";
 }
 
 
 void Game::create_unit_from_user(Player* player, AbstractFactory& factory) {
     int tt;
+    Unit unit;
     do {
         cout << "\tЗолото: "
         << player->gold
@@ -69,9 +71,9 @@ void Game::create_unit_from_user(Player* player, AbstractFactory& factory) {
                 cout << "Неправильное число\n";
         } while ((tt < 1) or (tt > unit_ids.size()));
         if (tt >= 1 and tt <= unit_ids.size() - 1)
-            if (player->gold - idtounit(tt).price >= 0) {
+            if (player->gold - idtounit(tt, unit).price >= 0) {
                 player->createUnit(tt, factory);
-                player->gold -= idtounit(tt).price;
+                player->gold -= idtounit(tt, unit).price;
                 cout << "\n";
                 Print().units(player);
                 cout << "\n";

@@ -14,4 +14,4 @@ public:
 	void createUnit(int unitid, AbstractFactory& factory);
 };
 
-Unit idtounit(int unitid);
+Unit& idtounit(int , Unit&);

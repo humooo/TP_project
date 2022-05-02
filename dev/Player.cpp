@@ -13,8 +13,7 @@ void Player::createUnit(int unitid, AbstractFactory& factory) {
 		units.push_back(factory.createUnit(unitid));
 }
 
-Unit idtounit(int unitid) {
-	 Unit res;
+Unit& idtounit(int unitid, Unit& res) {
 	 if (unitid == Archer().id) {
 		 res.hp = Archer().hp;
 		 res.dmg = Archer().dmg;
@@ -41,8 +40,7 @@ Unit idtounit(int unitid) {
 		 res.attackdmg = Cavalery().attackdmg;
 		 res.id = Cavalery().id;
 		 //res.name = Cavalery().name;
-	 }
-		else if (unitid == Tower().id) {
+	 } else if (unitid == Tower().id) {
 		 res.hp = Tower().hp;
 		 res.dmg = Tower().dmg;
 		 res.price = Tower().price;

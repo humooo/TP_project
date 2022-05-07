@@ -3,6 +3,8 @@
 
 vector<int> unit_ids;
 vector<command> cmd;
+Print print;
+Game game;
 
 std::string Game::idtoname(int unitid) {
     switch (unitid) {
@@ -22,7 +24,7 @@ void Print::units(Player* player) {
     for (int i = 0; i < player->units.size(); i++) {
         cout << "\t"
         << "(" << i + 1 << ") "
-        << Game().idtoname(player->units[i].id) << " "
+        << game.idtoname(player->units[i].id) << " "
         << player->units[i].dmg << " "
         << player->units[i].hp << " ";
         if (not player->units[i].canAttack)
@@ -45,7 +47,7 @@ void Print::all_units() {
         if (i != 3)
             cout << "\t"
             << " (" << idtounit(i + 1, unit).id << ") "
-            << Game().idtoname(i + 1) << " "
+            << game.idtoname(i + 1) << " "
             << idtounit(i + 1, unit).dmg << " "
             << idtounit(i + 1, unit).hp
             << " Стоимость: "
@@ -61,7 +63,7 @@ void Game::create_unit_from_user(Player* player, AbstractFactory& factory) {
         cout << "\tЗолото: "
         << player->gold
         << "\n";
-        Print().all_units();
+        print.all_units();
         cout << "\t"
         << " (" << unit_ids.size() << ") "
         << "Выход\n";
@@ -75,7 +77,7 @@ void Game::create_unit_from_user(Player* player, AbstractFactory& factory) {
                 player->createUnit(tt, factory);
                 player->gold -= idtounit(tt, unit).price;
                 cout << "\n";
-                Print().units(player);
+                print.units(player);
                 cout << "\n";
             }
         else
@@ -84,33 +86,33 @@ void Game::create_unit_from_user(Player* player, AbstractFactory& factory) {
 }
 
 void Game::do_turn(Player* player, AbstractFactory& factory, Player* opp) {
-    Print().info(player);
+    print.info(player);
     int t = 0;
     while(t != 5) {
         cin >> t;
         switch (t) {
         case 1:
-            Game().create_unit_from_user(player, factory);
-            Print().info(player);
+            game.create_unit_from_user(player, factory);
+            print.info(player);
             break;
         case 2:
-            Print().units(player);
-            Print().info(player);
+            print.units(player);
+            print.info(player);
             break;
         case 3:
-            Print().units(opp);
-            Print().info(player);
+            print.units(opp);
+            print.info(player);
             break;
         case 4:
             if(player->units.size() > 1)
-                Game().do_attack(player, opp);
+                game.do_attack(player, opp);
             else
                 cout << "Некому атаковать\n";
-            Print().info(player);
+            print.info(player);
             break;
         }
     }
-    Game().set_attack(player);
+    game.set_attack(player);
 }
 
 void Game::set_attack(Player* player) {
@@ -128,10 +130,10 @@ void Game::do_attack(Player* player, Player* opp) {
 	do {
 		int t1;
 		cout << player->name;
-		Print().units(player);
+		print.units(player);
 
 		cout << opp->name;
-        Print().units(opp);
+        print.units(opp);
 		cout << "\t("
 			<< player->units.size() + 1 << ") Выход\n";
 		bool b;
@@ -165,13 +167,13 @@ void Game::do_attack(Player* player, Player* opp) {
 		player->units[t1 - 1].hp -= opp->units[t2 - 1].dmg * player->units[t1 - 1].takendmg * opp->units[t2 - 1].attackdmg;
 		player->units[t1 - 1].canAttack = 0;
 		if (opp->units[t2 - 1].hp <= 0) {
-			if (t2 == 1) Print().game_over(player);
+			if (t2 == 1) print.game_over(player);
 			else {
 				player->gold += opp->units[t2 - 1].price * 2;
 				opp->units.erase(opp->units.begin() + t2 - 1);
 			}
 		}
-        Print().units(opp);
+        print.units(opp);
 	} while (1);
 }
 
@@ -205,10 +207,10 @@ void run() {
 
     while (true) {
         if (turn) {
-            Game().do_turn(&player1, engfactory, &player2);
+            game.do_turn(&player1, engfactory, &player2);
         }
         else {
-            Game().do_turn(&player2, francefactory, &player1);
+            game.do_turn(&player2, francefactory, &player1);
         }
         turn = not turn;
         cout << '\n';

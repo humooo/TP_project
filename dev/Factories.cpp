@@ -4,22 +4,22 @@
 
 Unit EngFactory::createUnit(int unitid) {
     Unit res;
-    if (unitid == Swordsmen().id) {
-        res = idtounit(Swordsmen().id, res);
+    Swordsmen swordsmen;
+    if (unitid == swordsmen.id) {
+        res = idtounit(swordsmen.id, res);
         res.dmg = 7;
         return res;
-    } else {
-        return idtounit(unitid, res);
     }
+    return idtounit(unitid, res);
 }
 
 Unit FranceFactory::createUnit(int unitid) {
     Unit res;
-    if (unitid == Archer().id) {
-        res = idtounit(Archer().id, res);
+    Archer archer;
+    if (unitid == archer.id) {
+        res = idtounit(archer.id, res);
         res.dmg = 5;
         return res;
-    } else {
-        return idtounit(unitid, res);
     }
+    return idtounit(unitid, res);
 }

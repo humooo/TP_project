@@ -3,23 +3,23 @@
 #include "Player.h"
 
 Unit EngFactory::createUnit(int unitid) {
-		if (unitid == Swordsmen().id) {
-			Unit res;
-			res = idtounit(Swordsmen().id);
-			res.dmg = 7;
-			return res;
-		} else {
-			return idtounit(unitid);
-		}
-	}
+    Unit res;
+    Swordsmen swordsmen;
+    if (unitid == swordsmen.id) {
+        res = idtounit(swordsmen.id, res);
+        res.dmg = 7;
+        return res;
+    }
+    return idtounit(unitid, res);
+}
 
 Unit FranceFactory::createUnit(int unitid) {
-		if (unitid == Archer().id) {
-			Unit res;
-			res = idtounit(Archer().id);
-			res.dmg = 5;
-		return res;
-		} else {
-			return idtounit(unitid);
-		}
-	}
+    Unit res;
+    Archer archer;
+    if (unitid == archer.id) {
+        res = idtounit(archer.id, res);
+        res.dmg = 5;
+        return res;
+    }
+    return idtounit(unitid, res);
+}

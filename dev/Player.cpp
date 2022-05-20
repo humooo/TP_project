@@ -1,7 +1,6 @@
 #include "Player.h"
 #include "Units.h"
 #include "Factories.h"
-#include <vector>
 
 Player::Player(AbstractFactory& factory, std::string _name) {
 		createUnit(Tower().id, factory);
@@ -13,44 +12,45 @@ void Player::createUnit(int unitid, AbstractFactory& factory) {
 		units.push_back(factory.createUnit(unitid));
 }
 
-Unit idtounit(int unitid) {
-	 Unit res;
-	 if (unitid == Archer().id) {
-		 res.hp = Archer().hp;
-		 res.dmg = Archer().dmg;
-		 res.price = Archer().price;
-		 res.takendmg = Archer().takendmg;
-		 res.attackdmg = Archer().attackdmg;
-		 res.id = Archer().id;
+Unit& idtounit(int unitid, Unit& res) {
+    Archer archer;
+    Swordsmen swordsmen;
+    Cavalery cavalery;
+    Tower tower;
+    if (unitid == archer.id) {
+	     res.hp = archer.hp;
+	     res.dmg = archer.dmg;
+	     res.price = archer.price;
+	     res.takendmg = archer.takendmg;
+	     res.attackdmg = archer.attackdmg;
+	     res.id = archer.id;
 		 //res.name = Archer().name;
 	 }
-	 else if (unitid == Swordsmen().id) {
-		 res.hp = Swordsmen().hp;
-		 res.dmg = Swordsmen().dmg;
-		 res.price = Swordsmen().price;
-		 res.takendmg = Swordsmen().takendmg;
-		 res.attackdmg = Swordsmen().attackdmg;
-		 res.id = Swordsmen().id;
+    else if (unitid == swordsmen.id) {
+        res.hp = swordsmen.hp;
+        res.dmg = swordsmen.dmg;
+		 res.price = swordsmen.price;
+		 res.takendmg = swordsmen.takendmg;
+		 res.attackdmg = swordsmen.attackdmg;
+		 res.id = swordsmen.id;
 		 //res.name = Swordsmen().name;
 	 }
-	 else if (unitid == Cavalery().id) {
-		 res.hp = Cavalery().hp;
-		 res.dmg = Cavalery().dmg;
-		 res.price = Cavalery().price;
-		 res.takendmg = Cavalery().takendmg;
-		 res.attackdmg = Cavalery().attackdmg;
-		 res.id = Cavalery().id;
+    else if (unitid == cavalery.id) {
+        res.hp = cavalery.hp;
+        res.dmg = cavalery.dmg;
+        res.price = cavalery.price;
+        res.takendmg = cavalery.takendmg;
+        res.attackdmg = cavalery.attackdmg;
+        res.id = cavalery.id;
 		 //res.name = Cavalery().name;
-	 }
-		else if (unitid == Tower().id) {
-		 res.hp = Tower().hp;
-		 res.dmg = Tower().dmg;
-		 res.price = Tower().price;
-		 res.takendmg = Tower().takendmg;
-		 res.attackdmg = Tower().attackdmg;
-		 res.id = Tower().id;
+    } else if (unitid == tower.id) {
+        res.hp = tower.hp;
+        res.dmg = tower.dmg;
+        res.price = tower.price;
+        res.takendmg = tower.takendmg;
+        res.attackdmg = tower.attackdmg;
+        res.id = tower.id;
 		 //res.name = Tower().name;
 	}
-
 	return res;
 }
